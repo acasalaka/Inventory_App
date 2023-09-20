@@ -81,10 +81,10 @@
    a. HTML
       Agar bisa menampilkan objek yang sudah ditambahkan dalm format HTML, saya perlu membuat sebuah template dasar bernama `base.html` di dalam sebuah folder yang berada di root folder dengan nama `templates`. Isi dari `base.html` adalah sebagai berikut.
 
-```
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+   ```
+   {% load static %}
+   <!DOCTYPE html>
+   <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta
@@ -99,59 +99,59 @@
         {% block content %}
         {% endblock content %}
     </body>
-</html>
-```
+   </html>
+   ```
 
-Kemudian, saya perlu mengubah file `settings.py` yang ada di subdirektori `Inventory_App` dan menambahkan kode `'DIRS': [BASE_DIR / 'templates']` di dalam variabel TEMPLATES. Hal ini perlu dilakukan agar kode pada `base.html` dapat dideteksi sebagai template.
+   Kemudian, saya perlu mengubah file `settings.py` yang ada di subdirektori `Inventory_App` dan menambahkan kode `'DIRS': [BASE_DIR / 'templates']` di dalam variabel TEMPLATES. Hal ini perlu dilakukan agar kode pada `base.html` dapat dideteksi sebagai template.
 
-Tahapan selanjutnya adalah mengubah `main.html` di dalam subdirektori `templates` menjadi barisan kode di bawah.
+   Tahapan selanjutnya adalah mengubah `main.html` di dalam subdirektori `templates` menjadi barisan kode di bawah.
 
-```
-{% extends 'base.html' %}
+   ```
+   {% extends 'base.html' %}
 
-{% block content %}
-   <h1>Inventory App Page</h1>
+   {% block content %}
+      <h1>Inventory App Page</h1>
 
-    <h5>App Name: </h5>
-    <p>{{ app_name }}</p>
+       <h5>App Name: </h5>
+       <p>{{ app_name }}</p>
 
-    <h5>Name: </h5>
-    <p>{{ name }}</p> <!-- Ubahlah sesuai dengan nama kamu -->
+       <h5>Name: </h5>
+       <p>{{ name }}</p> <!-- Ubahlah sesuai dengan nama kamu -->
 
-    <h5>Class: </h5>
-    <p>{{ class }}</p> <!-- Ubahlah sesuai dengan kelas kamu -->
+       <h5>Class: </h5>
+       <p>{{ class }}</p> <!-- Ubahlah sesuai dengan kelas kamu -->
 
-    <p> Selamat datang di Inventory App! Anda telah memasukkan {{count_products}} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
-{% endblock content %}
-```
+       <p> Selamat datang di Inventory App! Anda telah memasukkan {{count_products}} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
+   {% endblock content %}
+   ```
 
-Saya juga perlu membuat sebuah file baru dengan nama `create_product.html` di direktori main/templates. File tersebut diisi dengan kode sebagai berikut.
+   Saya juga perlu membuat sebuah file baru dengan nama `create_product.html` di direktori main/templates. File tersebut diisi dengan kode sebagai berikut.
 
-```
-{% extends 'base.html' %} 
+   ```
+   {% extends 'base.html' %} 
 
-{% block content %}
-<h1>Add New Product</h1>
+   {% block content %}
+   <h1>Add New Product</h1>
 
-<form method="POST"> // menandakan block mana yang digunakan untuk form dengan metode POST
+   <form method="POST"> // menandakan block mana yang digunakan untuk form dengan metode POST
     {% csrf_token %} // menjadi token untuk menjaga keamanan supaya tercegah dari serangan berbahaya
     <table>
         {{ form.as_table }} // menampilkan fields pada form yang sudah dibuat di file forms.py sebagai tabel
         <tr>
             <td></td>
             <td>
-                <input type="submit" value="Add Product"/> // membuat sebuah tombol submit dengan tulisan Add Product untuk mengirimkan request ke view create_product(request)
+                <input type="submit" value="Add Product"/> // membuat sebuah tombol submit dengan tulisan Add Product untuk    mengirimkan request ke view create_product(request)
             </td>
         </tr>
     </table>
-</form>
+   </form>
 
-{% endblock %}
-```
-Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}` supaya dapat menampilkan data produk dalam bentuk tabel sekaligus tombol "Add Product" yang akan me-redirect ke halaman form.
+   {% endblock %}
+   ```
+   Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}` supaya dapat menampilkan data produk dalam bentuk tabel sekaligus tombol "Add Product" yang akan me-redirect ke halaman form.
 
-```
-<table>
+   ```
+   <table>
             <tr>
             <th>Name</th>
             <th>Amount</th>
@@ -176,8 +176,8 @@ Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}
             Add New Product
         </button>
     </a>
-{% endblock content %}
-```
+   {% endblock content %}
+   ```
 
    b. XML, JSON, XML by ID, JSON by ID
 
@@ -207,21 +207,26 @@ Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}
    - [x] Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2.
      
    a. HTML
-      Untuk bisa mengakses view HTML, yang perlu kita lakukan cukup mengubah salah satu path yang telah kita tuliskan pada `urlpatterns` di dalam file `urls.py` yaitu `main/` menjadi `' '` sehingga dapat diakses pada Local Host HTML secara langsung, tanpa perlu menambahkan path `main/` di akhir URL.
+   
+   Untuk bisa mengakses view HTML, yang perlu kita lakukan cukup mengubah salah satu path yang telah kita tuliskan pada `urlpatterns` di dalam file `urls.py` yaitu `main/` menjadi `' '` sehingga dapat diakses pada Local Host HTML secara langsung, tanpa perlu menambahkan path `main/` di akhir URL.
 
    b. XML
-      Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `xml/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('xml/', show_xml, name='show_xml'),`
+   
+   Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `xml/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('xml/', show_xml, name='show_xml'),`
 
    c. JSON
-      Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `json/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('json/', show_json, name='show_json'),`
+   
+   Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `json/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('json/', show_json, name='show_json'),`
 
    d. XML by ID
-      Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),`.
+   
+   Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),`.
    
    e. JSON by ID
-      Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),`.
+   
+   Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),`.
      
-6. Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+5. Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
    
    a. HTML
    ![HTML](https://github.com/acasalaka/Inventory_App/assets/124960259/65cf14b5-01d0-48e5-bee5-d3b452256f01)
@@ -237,6 +242,3 @@ Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}
 
    e. JSON by ID (saya menggunakan ID = 3)
    ![JSON by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/11b150b4-852d-476a-b63a-ba1a20812b80)
-
-
-   
