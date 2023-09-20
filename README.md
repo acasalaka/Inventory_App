@@ -1,141 +1,241 @@
-# Tugas 2 Pemrograman Berbasis Platform
+# Tugas 3 Pemrograman Berbasis Platform
 **Nama    : Adrasa Cantya Salaka**
 
 **NPM     : 2206829603**
 
 **Kelas   : E**
 
-## Aplikasi Adaptable dari Tugas 2: Inventory App dapat diakses melalui tautan [berikut](https://tugas-2-pbp-aca.adaptable.app/main/).
+1. Apa perbedaan antara form POST dan form GET dalam Django?
 
-1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+   POST dan GET adalah satu-satunya metode HTTP yang digunakan saat menangani formulir. Akan tetapi, keduanya memiliki fungsi yang berbeda. Tabel di bawah ini menjelaskan perbedaan POST dan GET dalam Django. Berikut adalah [sumber](https://docs.djangoproject.com/en/4.2/topics/forms/#:~:text=GET%20and%20POST%20are%20typically,the%20state%20of%20the%20system) yang saya gunakan.
    
-     - [x]  Membuat sebuah proyek Django baru.
-           
-     Untuk bisa membuat sebuah proyek Django baru, saya perlu membuat virtual environment di dalam direktori proyek Inventory_App. Hal ini dilakukan dengan tujuan mengisolasi dependencies antara proyek-proyek yang berbeda.
+| POST | GET | 
+| :-----------: | :---------: |
+| POST digunakan saat ada permintaan untuk mengubah keadaan sistem | GET hanya boleh digunakan untuk permintaan yang tidak mempengaruhi keadaan sistem | 
+| Formulir masuk Django dikembalikan menggunakan metode POST | GET menggabungkan data yang dikirimkan ke dalam string, dan menggunakannya untuk membuat URL | 
+| Lebih aman, dapat digunakan untuk admin form dan menulis password | Lebih tidak aman, seluruh tulisan akan ditampilkan pada URL | 
 
-     Di dalam virtual environment tersebut, saya perlu memasangkan dependencies (pada kasus ini, dependencies dituliskan di dalam sebuah file bernama `requirements.txt`) menggunakan perintah `pip install -r requirements.txt`. Selanjutnya, saya akan membuat proyek Django dengan perintah `django-admin startproject Inventory_App .` 
 
-     - [x] Membuat aplikasi dengan nama main pada proyek tersebut.
-           
-     Di dalam proyek Inventory_App, perintah yang perlu dijalankan untuk membuat aplikasi dengan nama main adalah `python manage.py startapp main`. Perintah ini akan menciptakan direktori baru dengan nama `main` yang akan berisi struktur awal untuk aplikasi Inventory_App.
+2. Apa perbedaan utama antara XML, JSON, dan HTML dalam konteks pengiriman data?
+
+   [Sumber 1](https://www.deltaxml.com/blog/xml/whats-the-relationship-between-xml-json-html-and-the-internet/#:~:text=The%20differences%20between%20XML%2C%20JSON,how%20that%20data%20is%20displayed.), [Sumber 2](https://www.dicoding.com/blog/apa-itu-json/) & [Sumber 3](https://aws.amazon.com/id/compare/the-difference-between-json-xml/)
    
-     - [x] Melakukan routing pada proyek agar dapat menjalankan aplikasi main.
-           
-     Agar aplikasi bernama `main` yang sudah dibuat tadi dapat dijalankan, saya perlu membuka file `settings.py` dan menambahkan `'main'` (nama aplikasi yang dibuat tadi) pada variabel `INSTALLED_APPS`.
+| XML (eXtensible Markup Language) | JSON (JavaScript Object Notation) | HTML (HyperText Markup Language) |
+| :-----------: | :---------: | :----------: |
+| XML memiliki data yang lebih terstruktur dan pengguna dapat menggunakannya untuk menambahkan catatan | JSON digunakan untuk mengirimkan data dengan cara data diuraikan dan dikirimkan melalui internet | HTML adalah bahasa markup yang digunakan untuk membuat dan menampilkan halaman web |
+| XML merepresentasikan data dengan membentuk struktur seperti tree yang dimulai dari root, lalu branch, hingga berakhir pada leaves | JSON menggunakan pasangan kunci-nilai | HTML menggunakan tag untuk mendefinisikan elemen-elemen struktural di dalam halaman web |
 
-     - [x] Membuat model pada aplikasi main dengan nama Item dan memiliki atribut wajib sebagai berikut.
-           
-     `name` sebagai nama item dengan tipe `CharField`.
+3. Mengapa JSON sering digunakan dalam pertukaran data antara aplikasi web modern?
+
+   Karena format pertukaran datanya sangat ringan serta lebih mudah dibaca dan ditulis oleh manusia, sehingga mudah untuk diterjemahkan dan dibuat (generate) oleh komputer.
+
+4. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
    
-     `amount` sebagai jumlah item dengan tipe `IntegerField`.
-
-     `description` sebagai deskripsi item dengan tipe `TextField`.
-
-     Untuk bisa memenuhi kriteria-kriteria di atas, saya mmemasukkan barisan kode berikut pada berkas `models.py` di aplikasi main.
-   
-   ```
-     from django.db import models
-
-     class Product(models.Model): # Membuat class Product sebagai nama model yang akan dibuat. models.Model untuk mendefinisikan model pada Django.
-         # Assigning each attributes to their respective datatypes.
-         name = models.CharField(max_length=255)
-         amount = models.IntegerField()
-         description = models.TextField()
-   ```
-
-     Langkah yang seharusnya saya lakukan adalah mengaplikasikan migrasi model dengan cara menjalankan perintah-perintah berikut secara berurutan pada command prompt.
-
-   `python manage.py makemigrations` # Untuk mencari perbedaan pada model.
-
-   `python manage.py migrate` # Mengaplikasikan perubahan yang ditemukan
-
-     - [x] Membuat sebuah fungsi pada views.py untuk dikembalikan ke dalam sebuah template HTML yang menampilkan nama aplikasi serta nama dan kelas kamu.
-
-     Pada berkas `views.py` yang terletak di dalam berkas aplikasi main, tambahkan kode `from django.shortcuts import render` di line nomor 1 . Tujuan kode ini adalah mengimpor fungsi render dari modul `django.shortcuts` untuk me-render tampilan HTML dengan menggunakan data yang diberikan. Di bawahnya, kita perlu menambahkan barisan kode berikut.
-     ```
-      def show_main(request):
-          context = {
-              'app_name': 'Inventory App', 
-              'name': 'Adrasa Cantya Salaka',
-              'class': 'PBP E'
-          }
-      
-          return render(request, "main.html", context)
-     ```
-     
-     `def show_main(request)` merupakan deklarasi fungsi `show_main`, yang menerima parameter `request`. Fungsi ini akan mengatur permintaan HTTP dan mengembalikan tampilan yang sesuai. `context` adalah dictionary yang berisi data yang akan dikirimkan ke tampilan. Pada konteks ini, tiga data disertakan, yaitu:
-
-     - app_name: Data nama aplikasi.
-     - name: Data nama.
-     - class: Data kelas.
-       
-    `return render(request, "main.html", context)` berguna untuk me-render tampilan `main.html` dengan menggunakan fungsi render yang mengambil tiga argumen (`request`, `"main.html"`, dan `context`) sehingga tampilannya bisa dinamis.
-
-     - [X] Membuat sebuah routing pada urls.py aplikasi main untuk memetakan fungsi yang telah dibuat pada views.py.
-
-     Di dalam direktori main, saya akan membuat berkas berjudul `urls.py`. Berkas ini bertanggung jawab untuk mengonfigurasi routing URL aplikasi main.
-
-     Isi dari berkas tersebut adalah sebagai berikut.
-     ```
-     from django.urls import path # Mendefinisikan pola URL
-     from main.views import show_main # Tampilan yang akan ditampilkan saat URL diakses
-
-     app_name = 'main' # Memberikan nama unik pada pola URL dalam aplikasi
-
-     urlpatterns = [
-        path('', show_main, name='show_main'),
-     ]
-     ```
-     Selanjutnya yang perlu kita lakukan adalah menambahkan rute URL dalam `urls.py` tingkat proyek untuk menghubungkannya ke tampilan main. Hal ini dilakukan dengan cara mengimpor fungsi `include` untuk mengimpor rute URL dari aplikasi lain (dalam hal ini, dari aplikasi main) ke dalam berkas `urls.py` Inventory_App. Dilanjut dengan menambahkan rute URL `path('main/', include('main.urls'))` pada variabel `urlpatterns`, path URL `'main/'` akan diarahkan ke rute URL yang dibuat tadi pada file `urls.py` di aplikasi main. File `urls.py` pada aplikasi main bertugas untuk mengatur rute URL spesifik yang dibutuhkan oleh fitur-fitur aplikasi main sedangkan `urls.py` pada proyek Inventory_App bertugas untuk mengarahkan rute URL proyek dan akan mengimpor rute URL dari file `urls.py` aplikasi-aplikasi bila dibutuhkan.
-
-     - [X] Melakukan deployment ke Adaptable terhadap aplikasi yang sudah dibuat sehingga nantinya dapat diakses oleh teman-temanmu melalui Internet.
-
-     Langkah pertama yang harus dilakukan adalah memastikan file proyek `Inventory_App` sudah memiliki repositori di GitHub dengan nama `Inventory_App`. Pada website Adaptable.io, pilih `Create New App` dan pilih opsi `Connect Git Repository`, kemudian pilih `repository Inventory_App` dan pilih `branch main`. Langkah selanjutnya adalah memilih `Python App Template` sebagai Deploy Template-nya, Gunakan Database Type `Postgre SQL` dan pilih `python version` sesuai dengan yang digunakan (3.11) dan mengisi start command dengan perintah `python manage.py migrate && gunicorn Inventory_App.wsgi`. Masukkan nama aplikasi, yaitu `tugas-2-pbp-aca`, dimana nama ini juga akan menjadi nama domainnya, terakhir centang bagian `HTTP Listener on PORT` dan klik `Deploy App` untuk memulai proses deployment.
-
-2. Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara `urls.py`, `views.py`, `models.py`, dan berkas html.
-   
-   ![2.1 Gambar Bagan](https://github.com/acasalaka/Inventory_App/assets/124960259/9884e981-7c46-4f25-83f9-5af771d56693)
-   Awalnya, `Client` akan mengirimkan HTTP request ke URL tertentu dan ditangkap oleh `urls.py`. `urls.py` mencocokkan URL yang diterima dari request dengan pola URL yang didefinisikan dalam file ini. Jika URL cocok dengan salah satu pola yang ada, `urls.py` mengarahkan request ke `views.py` yang sesuai. `views.py` dapat berinteraksi dengan `models.py` (jika diperlukan) untuk mengambil atau memanipulasi data dari database. `models.py` mengembalikan data dari database ke `views.py`. `views.py` akan mengolah berkas `main.html` dengan menggunakan data yang telah diperoleh dari `models.py`. Hasil olahan `main.html` oleh `views.py` akan menghasilkan response yang dikirim kembali ke `Client`
-
-3. Jelaskan mengapa kita menggunakan virtual environment? Apakah kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment?
-   
-   Pada sebuah proyek yang menggunakan Django, kita perlu menggunakan virtual environment untuk mengisolasi package serta dependencies dari aplikasi sehingga tidak bertabrakan dengan versi lain yang ada pada komputer. Apabila dianalogikan, virtual environment adalah sebuah kamar pribadi di dalam rumah yang sangat bebas untuk digunakan oleh seseorang tanpa mengganggu penghuni-penghuni yang lain. Kita tetap dapat membuat aplikasi web berbasis Django tanpa menggunakan virtual environment, namun pastinya akan rentan bermasalah disaat kita memiliki lebih dari satu proyek Django pada komputer kita.  
-
-4. Jelaskan apakah itu MVC, MVT, MVVM dan perbedaan dari ketiganya.
-
-   Ketiganya merupakan jenis-jenis pola desain arsitektur. 
-   
-   **Model - View - Controller (MVC)**
-   _Referensi: [https://www.geeksforgeeks.org/mvc-framework-introduction/](https://www.geeksforgeeks.org/mvc-framework-introduction/)_ 
-   
-   ![4.1 Gambar Bagan MVC](https://github.com/acasalaka/Inventory_App/assets/124960259/81e4e801-6b05-4138-b398-765742447796)
-   
-   - Model: komponen ini berisi tentang logika bisnis dan status data yang ada di dalam aplikasi. Ini dapat mewakili data yang ditransfer antara komponen View dan Controller atau data terkait logika bisnis lainnya.
-   - View: komponen ini berhubungan dengan antarmuka pengguna yang terdiri dari HTML/CSS.XML. Komponen ini berkomunikasi dengan pengontrol dan terkadang berinteraksi dengan model. View berkerja sama dengan controller untuk menciptakan tampilan dinamis pada aplikasi yang dikembangkan. Selain bertugas untuk menangani antarmuka dan interaksi pengguna, komponen view juga memiliki tugas untuk menyajikan data yang sesuai untuk pengguna.
-   - Controller: Controller adalah komponen yang mengintegrasikan View dan Model, perantara. Memproses semua logika bisnis dan permintaan masuk, memanipulasi data menggunakan komponen Model, dan berinteraksi dengan View untuk me-render tampilan akhir.
-   
-   Perbedaannya dengan yang lain adalah mempunyai batasan yang jelas antara logika bisnis, logika UI, dan logika input. Selain itu, perbedaan-perbedaan lainnya antara lain inputnya diarahkan pada Controller, relasi antara Controller dan View bersifat many-to-one, dan Controller menyerahkan Model ke View juga sehingga View paham tentang Controller. 
-   
-   **Model - View - Template (MVT)**
-   _Referensi: [https://www.geeksforgeeks.org/django-project-mvt-structure/](https://www.geeksforgeeks.org/django-project-mvt-structure/)_ 
-   
-   ![4.2 Gambar Bagan MVT](https://github.com/acasalaka/Inventory_App/assets/124960259/2c981e8d-0834-4687-b8cc-1ec33a1d46be)
-
-     Merupakan turunan dari MVC.
-     
-   - Model: bertindak sebagai interface data. objek yang mendefinisikan entitas pada database beserta konfigurasinya.
-   - View: interface pengguna — apa yang dilihat di browser saat me-render situs web. Logika utama dari aplikasi yang akan melakukan pemrosesan terhadap permintaan yang masuk.
-   - Template: komponen yang berfungsi untuk mengatur tampilan atau antarmuka pengguna. Template memisahkan kode HTML dari logika aplikasi. Dalam MVT, template digunakan untuk merancang tampilan yang akhirnya akan diisi dengan data dari Model melalui View.
+     - [x]  Membuat input form untuk menambahkan objek model pada app sebelumnya.
   
-   Perbedaannya dengan yang lain adalah alurnya. Berikut adalah alur pemrosesan sebuah request atau permintaan pada MVT. Yang pertama, permintaan yang masuk ke dalam server Django akan diproses melalui `urls` untuk diteruskan ke `views` yang didefinisikan oleh pengembang untuk memproses permintaan tersebut. Apabila terdapat proses yang membutuhkan keterlibatan database, maka nantinya `views` akan memanggil query ke `models` dan database akan mengembalikan hasil dari query tersebut ke `views`. Setelah permintaan telah selesai diproses, hasil proses tersebut akan dipetakan ke dalam HTML yang sudah didefinisikan sebelum akhirnya HTML tersebut dikembalikan ke pengguna sebagai respons.
-
-   **Model - View - ViewModel (MVVM)**
-   _Referensi: [https://www.geeksforgeeks.org/introduction-to-model-view-view-model-mvvm/](https://www.geeksforgeeks.org/introduction-to-model-view-view-model-mvvm/)_
+   Yang pertama harus dilakukan adalah membuat file di direktori `main` dengan nama `forms.py` lalu menambahkan Product dari models.py supaya isi dari form akan disimpan menjadi objek Product dengan meminta fields yang sesuai pada `models.py`. Untuk membuat sebuah input form pada aplikasi Django, kita perlu menggunakan `from django.forms import ModelForm` yang telah didesain khusus untuk mengubah model menjadi Django form. Berikut adalah barisan kode yang saya gunakan.
    
-   ![4.3 Gambar Bagan MVVM](https://github.com/acasalaka/Inventory_App/assets/124960259/b97b6af3-2fda-40f0-9c2f-d69127d4354e)
+   ```
+   from django.forms import ModelForm
+   from main.models import Product
 
-   - Model: objek bisnis yang merangkum data dan perilaku domain aplikasi, hanya menyimpan data.
-   - View: memformat data sehingga mudah untuk dilihat oleh pengguna.
-   - ViewModel: abstraksi dari View dan juga penyedia pembungkus data Model untuk ditautkan. ViewModel terdiri dari Model yang diubah menjadi View, dan berisi perintah yang dapat digunakan oleh View untuk mempengaruhi Model.
+   class ProductForm(ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "amount", "description"]
+   ```
+   `fields` sebaiknya dinyatakan secara eksplisit agar pengguna dapat menggunakan input forms tersebut dengan baik dan menghindari adanya kesalahan input. Value `__all__` dapat digunakan untuk menyatakan bahwa semua field pada model dapat digunakan.
+
+   Setelah itu, saya perlu meng-import beberapa fungsi di dalam `views.py` di direktori main, menambahkan fungsi `create_product` dan mengubah fungsi `show_main`.
+
+   ```
+   from django.http import HttpResponseRedirect
+   from main.forms import ProductForm
+   from django.urls import reverse
+
+   def show_main(request):
+    products = Product.objects.all()
+    count_products = Product.objects.count()
+    context = {
+        'app_name': 'Inventory App', 
+        'name': 'Adrasa Cantya Salaka',
+        'class': 'PBP E',
+        'products': products,
+        'count_products': count_products,
+    }
+
+    return render(request, "main.html", context)
+
+   def create_product(request):
+   form = ProductForm(request.POST or None)
+   if form.is_valid() and request.method == "POST":
+      form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
    
-   Perbedaannya dengan yang lain adalah inputnya diawali pada Model, relasi antara ViewModel dengan View dan Model bersifat one-to-many, dan View tidak aware akan Model.
+   context = {'form': form}
+   return render(request, "create_product.html", context)
+   ```
+
+     - [x] Tambahkan 5 fungsi views untuk melihat objek yang sudah ditambahkan dalam format HTML, XML, JSON, XML by ID, dan JSON by ID.
+
+   a. HTML
+      Agar bisa menampilkan objek yang sudah ditambahkan dalm format HTML, saya perlu membuat sebuah template dasar bernama `base.html` di dalam sebuah folder yang berada di root folder dengan nama `templates`. Isi dari `base.html` adalah sebagai berikut.
+
+```
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        {% block meta %}
+        {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
+</html>
+```
+
+Kemudian, saya perlu mengubah file `settings.py` yang ada di subdirektori `Inventory_App` dan menambahkan kode `'DIRS': [BASE_DIR / 'templates']` di dalam variabel TEMPLATES. Hal ini perlu dilakukan agar kode pada `base.html` dapat dideteksi sebagai template.
+
+Tahapan selanjutnya adalah mengubah `main.html` di dalam subdirektori `templates` menjadi barisan kode di bawah.
+
+```
+{% extends 'base.html' %}
+
+{% block content %}
+   <h1>Inventory App Page</h1>
+
+    <h5>App Name: </h5>
+    <p>{{ app_name }}</p>
+
+    <h5>Name: </h5>
+    <p>{{ name }}</p> <!-- Ubahlah sesuai dengan nama kamu -->
+
+    <h5>Class: </h5>
+    <p>{{ class }}</p> <!-- Ubahlah sesuai dengan kelas kamu -->
+
+    <p> Selamat datang di Inventory App! Anda telah memasukkan {{count_products}} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
+{% endblock content %}
+```
+
+Saya juga perlu membuat sebuah file baru dengan nama `create_product.html` di direktori main/templates. File tersebut diisi dengan kode sebagai berikut.
+
+```
+{% extends 'base.html' %} 
+
+{% block content %}
+<h1>Add New Product</h1>
+
+<form method="POST"> // menandakan block mana yang digunakan untuk form dengan metode POST
+    {% csrf_token %} // menjadi token untuk menjaga keamanan supaya tercegah dari serangan berbahaya
+    <table>
+        {{ form.as_table }} // menampilkan fields pada form yang sudah dibuat di file forms.py sebagai tabel
+        <tr>
+            <td></td>
+            <td>
+                <input type="submit" value="Add Product"/> // membuat sebuah tombol submit dengan tulisan Add Product untuk mengirimkan request ke view create_product(request)
+            </td>
+        </tr>
+    </table>
+</form>
+
+{% endblock %}
+```
+Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}` supaya dapat menampilkan data produk dalam bentuk tabel sekaligus tombol "Add Product" yang akan me-redirect ke halaman form.
+
+```
+<table>
+            <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Description</th>
+            <th>Date Added</th>
+        </tr>
+
+        {% for product in products %}
+            <tr>
+                <td>{{product.name}}</td>
+                <td>{{product.amount}}</td>
+                <td>{{product.description}}</td>
+                <td>{{product.date_added}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <br />
+
+    <a href="{% url 'main:create_product' %}">
+        <button>
+            Add New Product
+        </button>
+    </a>
+{% endblock content %}
+```
+
+   b. XML, JSON, XML by ID, JSON by ID
+
+   Pada file `views.py` yang ada pada folder main, tambahkan import `HttpResponse` dan `Serializer` pada bagian paling atas. `Serializers` digunakan untuk translate objek model menjadi format lain seperti XML dan JSON. Kemudian, membuat fungsi baru seperti pada barisan kode di bawah pada file `views.py` di `main`.
+
+   ```
+   from django.http import HttpResponse
+   from django.core import serializers
+
+   def show_xml(request):
+      data = Product.objects.all()
+      return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+   def show_json(request):
+       data = Product.objects.all()
+       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+
+   def show_xml_by_id(request, id):
+       data = Product.objects.filter(pk=id)
+       return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
+
+   def show_json_by_id(request, id):
+       data = Product.objects.filter(pk=id)
+       return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+   ```
+
+   - [x] Membuat routing URL untuk masing-masing views yang telah ditambahkan pada poin 2.
+     
+   a. HTML
+      Untuk bisa mengakses view HTML, yang perlu kita lakukan cukup mengubah salah satu path yang telah kita tuliskan pada `urlpatterns` di dalam file `urls.py` yaitu `main/` menjadi `' '` sehingga dapat diakses pada Local Host HTML secara langsung, tanpa perlu menambahkan path `main/` di akhir URL.
+
+   b. XML
+      Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `xml/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('xml/', show_xml, name='show_xml'),`
+
+   c. JSON
+      Menambahkan path baru ke dalam `urlpatterns` dalam file `urls.py` sehingga fungsi yang baru ditambahkan dapat diakses dengan menambahkan `json/` pada tautan local host kita. Kodenya adalah sebagai berikut `path('json/', show_json, name='show_json'),`
+
+   d. XML by ID
+      Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('xml/<int:id>/', show_xml_by_id, name='show_xml_by_id'),`.
+   
+   e. JSON by ID
+      Menambahkan path url ke dalam `urlpatterns` menggunakan kode `path('json/<int:id>/', show_json_by_id, name='show_json_by_id'),`.
+     
+6. Mengakses kelima URL di poin 2 menggunakan Postman, membuat screenshot dari hasil akses URL pada Postman, dan menambahkannya ke dalam README.md.
+   
+   a. HTML
+   ![HTML](https://github.com/acasalaka/Inventory_App/assets/124960259/65cf14b5-01d0-48e5-bee5-d3b452256f01)
+
+   b. XML
+   ![XML](https://github.com/acasalaka/Inventory_App/assets/124960259/31494a2d-a6a1-4eeb-9f5e-ef3cc05761c8)
+
+   c. JSON
+   ![JSON](https://github.com/acasalaka/Inventory_App/assets/124960259/051b485d-4f0e-46a4-b28b-6ed2f74dc741)
+
+   d. XML by ID (saya menggunakan ID = 3)
+   ![XML by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/490a56aa-5080-4441-a77f-0c4796bafdec)
+
+   e. JSON by ID (saya menggunakan ID = 3)
+   ![JSON by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/194bd95b-c826-4bd6-ac1c-64e7b9388a2f)
+
+   
