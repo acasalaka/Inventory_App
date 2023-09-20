@@ -10,12 +10,14 @@ from main.models import Product
 # Create your views here.
 def show_main(request):
     products = Product.objects.all()
+    count_products = Product.objects.count()
 
     context = {
         'app_name': 'Inventory App', 
         'name': 'Adrasa Cantya Salaka',
         'class': 'PBP E',
-        'products': products
+        'products': products,
+        'count_products': count_products,
     }
 
     return render(request, "main.html", context)
