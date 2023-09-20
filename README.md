@@ -227,15 +227,16 @@ Di dalam file `main.html`, tambahkan kode di bawah ke dalam `{% block content %}
    ![HTML](https://github.com/acasalaka/Inventory_App/assets/124960259/65cf14b5-01d0-48e5-bee5-d3b452256f01)
 
    b. XML
-   ![XML](https://github.com/acasalaka/Inventory_App/assets/124960259/31494a2d-a6a1-4eeb-9f5e-ef3cc05761c8)
+   ![XML](https://github.com/acasalaka/Inventory_App/assets/124960259/e64976ef-ed82-468a-9bb1-c1b9ec12f023)
 
    c. JSON
-   ![JSON](https://github.com/acasalaka/Inventory_App/assets/124960259/051b485d-4f0e-46a4-b28b-6ed2f74dc741)
+   ![JSON](https://github.com/acasalaka/Inventory_App/assets/124960259/ad5f657f-6aa0-414b-8462-f6d2022d517c)
 
    d. XML by ID (saya menggunakan ID = 3)
-   ![XML by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/490a56aa-5080-4441-a77f-0c4796bafdec)
+   ![XML by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/330b582f-f8f1-4324-b796-2733af1077b4)
 
    e. JSON by ID (saya menggunakan ID = 3)
-   ![JSON by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/194bd95b-c826-4bd6-ac1c-64e7b9388a2f)
+   ![JSON by ID = 3](https://github.com/acasalaka/Inventory_App/assets/124960259/11b150b4-852d-476a-b63a-ba1a20812b80)
+
 
    
