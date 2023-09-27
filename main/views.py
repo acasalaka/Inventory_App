@@ -14,8 +14,8 @@ from main.models import Product
 
 @login_required(login_url='/login')
 def show_main(request):
-    products = Product.objects.all()
-    count_products = Product.objects.count()
+    products = Product.objects.filter(user=request.user)
+    count_products = Product.objects.filter(user=request.user).count()
 
     context = {
         'app_name': 'Inventory App', 
