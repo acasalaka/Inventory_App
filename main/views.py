@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from main.forms import ProductForm
@@ -11,12 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 from main.models import Product
 
-import datetime
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-
 @login_required(login_url='/login')
-
 def show_main(request):
     products = Product.objects.all()
     count_products = Product.objects.count()
