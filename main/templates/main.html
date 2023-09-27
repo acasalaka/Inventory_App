@@ -20,7 +20,6 @@
             <th>Name</th>
             <th>Amount</th>
             <th>Description</th>
-            <th>Date Added</th>
         </tr>
 
         {% for product in products %}
@@ -28,16 +27,23 @@
                 <td>{{product.name}}</td>
                 <td>{{product.amount}}</td>
                 <td>{{product.description}}</td>
-                <td>{{product.date_added}}</td>
             </tr>
         {% endfor %}
     </table>
 
     <br />
 
+    <h5>Sesi terakhir login: {{ last_login }}</h5>
+
     <a href="{% url 'main:create_product' %}">
         <button>
             Add New Product
+        </button>
+    </a>
+
+    <a href="{% url 'main:logout' %}">
+        <button>
+            Logout
         </button>
     </a>
 
