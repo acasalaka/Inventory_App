@@ -1,19 +1,29 @@
 {% extends 'base.html' %}
 
 {% block meta %}
-    <title>Inventory App Register</title>
+
+<title>Edit Product</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+        }
         body {
             font-family: "Poppins", sans-serif;
             text-align: center;
             max-width: auto;
             max-height: auto;
-            background-image: url('https://images.unsplash.com/photo-1513672494107-cd9d848a383e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
+            background-color: blanchedalmond;
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
         }
-        .register {
+        h2 {
+            margin-bottom: 10px;
+        }
+        .edit-product {
             display: inline-block;
             width: auto;
             height: auto;
@@ -22,8 +32,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             margin: 0 auto;
-            padding-left: 30px;
-            padding-right: 30px;
+            padding: 30px;
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -33,7 +42,7 @@
             text-align: left;
         }
         input[type="text"],
-        input[type="password"] {
+        input[type="number"], textarea {
             width: 80%; 
             padding: 10px;
             margin-top: 5px;
@@ -51,53 +60,43 @@
             cursor: pointer;
             position: relative;
             margin-top: 10px;
-            margin-bottom: 10px;
-            transform: translateX(-90%);
+            transform: translateX(-30%);
         }
         input[type="submit"]:hover {
             background-color: #024995;
         }
-        span[class="helptext"] {
-            font-size: smaller;
-        }
         ul {
             text-align: left;
         }
+        td {
+            border-radius: 8px;
+        }
         th {
             text-align: left;
-        }
-        tr {
-            text-align: center;
         }
     </style>
 
 {% endblock meta %}
 
-{% block content %}  
 
-<div class = "register">
+{% block content %}
+
+<div class="edit-product">
+    <h2>Edit Product</h2>
     
-    <h1>Register</h1>  
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Edit Product"/>
+                </td>
+            </tr>
+        </table>
+    </form>
 
-        <form method="POST" >  
-            {% csrf_token %}  
-            <table>  
-                {{ form.as_table }}  
-                <tr>  
-                    <td></td>
-                    <td><input type="submit" name="submit" value="Register"/></td>  
-                </tr>  
-            </table>  
-        </form>
-
-    {% if messages %}  
-        <ul>   
-            {% for message in messages %}  
-                <li>{{ message }}</li>  
-                {% endfor %}  
-        </ul>   
-    {% endif %}
-
-</div>  
+</div>
 
 {% endblock content %}

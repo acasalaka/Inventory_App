@@ -1,33 +1,140 @@
 {% extends 'base.html' %}
 
+{% block meta %}
+<script src="https://kit.fontawesome.com/54f81dee97.js" crossorigin="anonymous"></script>
+
+    <title>Inventory App Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+        }
+        body {
+            background-color: blanchedalmond;
+        }
+        h2 {
+            margin-top: 50px;
+            margin-bottom: 10px;
+
+        }
+        h5 {
+            margin-bottom: 50px;
+        }
+        .navbar {
+            background-color: white;
+            overflow: hidden;
+        }
+        .navbar a {
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        .navbar .logo {
+            float: left;
+        }
+        .logout-btn {
+            float: right;
+            padding: 14px 16px;
+            background-color: rgb(232, 232, 232);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .logout-btn:hover {
+            background-color: rgb(198, 197, 197);
+        }
+        table {
+            margin: auto;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            width: 80%;
+        }
+        th {
+            background-color: #0070e8;
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+        }
+        td {
+            padding: 10px;
+            font-size: 14px;
+            text-align: center;
+        }
+        tr {
+            border: 1px;
+            text-align: justify;
+            font-size: 14px;
+            background-color: white;
+            margin: 10px;
+        }
+        tr[class="last-row"] {
+            background-color: rgb(198, 197, 197);
+        } 
+        button {
+            background-color: white; 
+            color: black; 
+            padding: 10px 20px;
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            margin-right: 20px;
+        }
+        button:hover{
+            background-color: #bababa;
+        }
+        button:active {
+            color: black;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+    </style>
+
+{% endblock meta %}
+
 {% block content %}
 
-    <h1>Inventory App Page</h1>
+<div class="navbar">
+    <a class="logo"><i class="fa-solid fa-box" style="color: #0070e8;" width="20px"></i>&nbsp; &nbsp; &nbsp;Inventory App</a>
+    <a class="logout-btn" href="{% url 'main:logout' %}">Logout</a>
+</div>
+</nav>
 
-    <h5>App Name: </h5>
-    <p>{{ app_name }}</p>
-
-    <h5>Name: </h5>
-    <p>{{ name }}</p> <!-- Ubahlah sesuai dengan nama kamu -->
-
-    <h5>Class: </h5>
-    <p>{{ class }}</p> <!-- Ubahlah sesuai dengan kelas kamu -->
-
-    <p> Selamat datang di Inventory App! Anda telah memasukkan {{count_products}} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
+    <h2>Selamat datang di {{ app_name }}, {{ name }}! </h5>
+    <p> Anda telah memasukkan {{ count_products }} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
 
     <table>
         <tr>
             <th>Name</th>
             <th>Amount</th>
             <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
 
         {% for product in products %}
-            <tr>
-                <td>{{product.name}}</td>
-                <td>{{product.amount}}</td>
-                <td>{{product.description}}</td>
-            </tr>
+        <tr{% if forloop.last %} class="last-row"{% endif %}>                
+            <td>{{product.name}}</td>
+            <td>{{product.amount}}</td>
+            <td>{{product.description}}</td>
+            <td>
+                <a href="{% url 'main:edit_product' product.pk %}">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </a>
+            </td>
+            <td>
+                <a href="{% url 'main:delete_product' product.pk %}">
+                    <i class="fa-solid fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+            
         {% endfor %}
     </table>
 
@@ -35,16 +142,15 @@
 
     <h5>Sesi terakhir login: {{ last_login }}</h5>
 
-    <a href="{% url 'main:create_product' %}">
-        <button>
+   <a href="{% url 'main:create_product' %}">
+        <button margin-right="5px">
             Add New Product
         </button>
     </a>
-
     <a href="{% url 'main:logout' %}">
         <button>
             Logout
         </button>
     </a>
-
+    
 {% endblock content %}
