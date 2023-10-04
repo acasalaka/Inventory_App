@@ -93,6 +93,16 @@
             text-decoration: none;
             color: black;
         }
+        button[class="amount"] {
+            background-color: #0070e8;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            padding: 2px 10px 2px 10px;
+            margin-left: 5%;
+            margin-right: 5%;
+        }
 
     </style>
 
@@ -112,8 +122,8 @@
     <table>
         <tr>
             <th>Name</th>
-            <th>Amount</th>
             <th>Description</th>
+            <th>Amount</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -121,8 +131,16 @@
         {% for product in products %}
         <tr>                
             <td>{{product.name}}</td>
-            <td>{{product.amount}}</td>
             <td>{{product.description}}</td>
+            <td>
+                <a href="{% url 'main:substract_amount' product.id %}">
+                <button class="amount">-</button>
+                </a>
+                {{product.amount}}
+                <a href="{% url 'main:add_amount' product.id %}">
+                <button class="amount">+</button>
+                </a>
+            </td>
             <td>
                 <a href="{% url 'main:edit_product' product.pk %}">
                     <i class="fa-regular fa-pen-to-square"></i>
