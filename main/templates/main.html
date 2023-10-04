@@ -71,7 +71,7 @@
             background-color: white;
             margin: 10px;
         }
-        tr[class="last-row"] {
+        tr:last-child {
             background-color: rgb(198, 197, 197);
         } 
         button {
@@ -86,7 +86,7 @@
         button:hover{
             background-color: #bababa;
         }
-        button:active {
+        button:visited {
             color: black;
         }
         a {
@@ -119,7 +119,7 @@
         </tr>
 
         {% for product in products %}
-        <tr{% if forloop.last %} class="last-row"{% endif %}>                
+        <tr>                
             <td>{{product.name}}</td>
             <td>{{product.amount}}</td>
             <td>{{product.description}}</td>
