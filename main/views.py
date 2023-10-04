@@ -104,3 +104,16 @@ def delete_product(request, id):
     product = Product.objects.get(pk = id)
     product.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
+
+def add_amount(request, id):
+    product = Product.objects.get(pk = id)
+    product.amount += 1
+    product.save()
+    return HttpResponseRedirect(reverse('main:show_main'))
+
+def substract_amount(request, id):
+    product = Product.objects.get(pk = id)
+    if product.amount > 0:
+        product.amount -= 1
+        product.save()
+    return HttpResponseRedirect(reverse('main:show_main'))
