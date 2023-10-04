@@ -529,7 +529,7 @@ Pada tugas ini, saya menggunakan CSS from scratch. Saya juga banyak menggunakan 
 <script src="https://kit.fontawesome.com/54f81dee97.js" crossorigin="anonymous"></script>
 ```
 
-Selanjutnya saya akan menambahkan block `<style>` di bawah block script untuk meletakkan pengaturan style yang saya inginkan dari halaman login, register, dan tambah inventori. Pada block ini, saya banyak menggunakan element selector, class selector, [attribute="value"] selector, dan juga melakukan spesifikasi element selection dengan action yang akan digunakan seperti `:visited`, `:hover`, `:last-child`, dan lain sebagainya. Action selection `:last-child` secara spesifik akan saya gunakan untuk mengerjakan tugas bonus, yaitu memberikan warna yang berbeda pada produk terakhir di tabel.
+Selanjutnya saya akan menambahkan block `<style>` di bawah block script untuk meletakkan pengaturan style yang saya inginkan dari halaman login, register, dan tambah inventori. Pada block ini, saya banyak menggunakan element selector, class selector, [attribute="value"] selector, dan juga menggunakan pseudo-class selector `:visited`, `:hover`, `:last-child`, dan lain sebagainya. Action selection `:last-child` secara spesifik akan saya gunakan untuk mengerjakan tugas bonus, yaitu memberikan warna yang berbeda pada produk terakhir di tabel.
 
 Untuk bisa membuat sebuah navbar, saya meletakan barisan kode berikut setelah {% block content %} dimulai.
 
@@ -728,10 +728,34 @@ Nantinya, laman edit_product akan mendapatkan style yang kurang lebih sama denga
 
     ```
     p.center {
-    text-align: center;
-    color: red;
+        text-align: center;
+        color: red;
     }
     ```
+
+    e. Pseudo-class selector
+
+   Mendefinisikan keadaan khusus suatu elemen. Contohnya adalah saat elemen tersebut dikunjungi, atau di-hover mengugnakan mouse. Sintaksnya adalah sebagai berikut.
+
+   ```
+    p:hover {
+        color: grey;
+        font-variant: small-caps;
+    }
+
+   ```
+
+    f. Pseudo-element selector
+
+    Mendefinisikan bagian tertentu dari suatu elemen. Contohnya untuk styling huruf pertama atau baris pertama dari sebuah elemen. Sintaksnya adalah sebagai berikut.
+
+    ```
+    p::first-line {
+        color: #ff0000;
+        font-variant: small-caps;
+    }
+
+```
 
     e. Grouping selector
 
