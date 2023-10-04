@@ -1,7 +1,87 @@
 {% extends 'base.html' %} 
 
+{% block meta %}
+
+<title>Add Product</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+        }
+        body {
+            font-family: "Poppins", sans-serif;
+            text-align: center;
+            max-width: auto;
+            max-height: auto;
+            background-color: blanchedalmond;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        .add-product {
+            display: inline-block;
+            width: auto;
+            height: auto;
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        table {
+            margin-bottom: 3px;
+            text-align: left;
+        }
+        input[type="text"],
+        input[type="number"], textarea {
+            width: 80%; 
+            padding: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: left;
+        }
+        input[type="submit"] {
+            background-color: #0070e8;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            position: relative;
+            margin-top: 10px;
+            transform: translateX(-30%);
+        }
+        input[type="submit"]:hover {
+            background-color: #024995;
+        }
+        ul {
+            text-align: left;
+        }
+        td {
+            border-radius: 8px;
+        }
+        th {
+            text-align: left;
+        }
+    </style>
+
+{% endblock meta %}
+
 {% block content %}
-<h1>Add New Product</h1>
+
+<div class = "add-product">
+<h2>Add New Product</h2>
 
 <form method="POST">
     {% csrf_token %}
@@ -15,5 +95,6 @@
         </tr>
     </table>
 </form>
+</div>
 
-{% endblock %}
+{% endblock content %}
