@@ -1,6 +1,6 @@
 import datetime
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseBadRequest, HttpResponseNotFound, HttpResponseRedirect
 from main.forms import ProductForm
 from django.urls import reverse
 from django.http import HttpResponse
@@ -9,6 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from main.models import Product
 
@@ -17,14 +18,18 @@ def show_main(request):
     products = Product.objects.filter(user=request.user)
     count_products = Product.objects.filter(user=request.user).count()
 
+    if 'last_login' in request.COOKIES:
+        last_login = request.COOKIES['last_login']
+    else:
+        last_login = 'N/A' 
     context = {
         'app_name': 'Inventory App', 
         'name': request.user.username,
-        # 'class': 'PBP E',
         'products': products,
         'count_products': count_products,
-        'last_login': request.COOKIES['last_login'],
+        'last_login': last_login,
     }
+
     return render(request, "main.html", context)
 
 def create_product(request):
@@ -33,6 +38,7 @@ def create_product(request):
     if form.is_valid() and request.method == "POST":
         product = form.save(commit=False)
         product.user = request.user
+        product.date_added = datetime.datetime.now()
         product.save()
         return HttpResponseRedirect(reverse('main:show_main'))
 
@@ -71,7 +77,9 @@ def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
             response = HttpResponseRedirect(reverse("main:show_main")) 
@@ -117,3 +125,27 @@ def substract_amount(request, id):
         product.amount -= 1
         product.save()
     return HttpResponseRedirect(reverse('main:show_main'))
+
+def get_product_json(request):
+    product_item = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', product_item))
+
+@csrf_exempt
+def add_product_ajax(request):
+    if request.method == 'POST':
+        name = request.POST.get("name")
+        amount = request.POST.get("amount")
+        try:
+            amount = float(amount)
+        except (ValueError, TypeError, amount < 0):
+            return HttpResponseBadRequest("Masukkan bilangan bulat positif.")
+        
+        description = request.POST.get("description")
+        user = request.user
+
+        new_product = Product(name=name, amount=amount, description=description, user=user)
+        new_product.save()
+
+        return HttpResponse(b"CREATED", status=201)
+
+    return HttpResponseNotFound()

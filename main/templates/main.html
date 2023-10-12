@@ -3,7 +3,7 @@
 {% block meta %}
 <script src="https://kit.fontawesome.com/54f81dee97.js" crossorigin="anonymous"></script>
 
-    <title>Inventory App Page</title>
+    <title>Home - Inventory App</title>
     <style>
         * {
             margin: 0;
@@ -14,25 +14,12 @@
         body {
             background-color: blanchedalmond;
         }
-        h2 {
-            margin-top: 50px;
-            margin-bottom: 10px;
-
-        }
-        h5 {
-            margin-bottom: 50px;
-        }
-        .navbar {
-            background-color: white;
-            overflow: hidden;
-        }
-        .navbar a {
+        nav a {
             color: black;
             text-align: center;
-            padding: 14px 16px;
             text-decoration: none;
         }
-        .navbar .logo {
+        nav .logo {
             float: left;
         }
         .logout-btn {
@@ -46,11 +33,12 @@
         .logout-btn:hover {
             background-color: rgb(198, 197, 197);
         }
-        table {
+        #product_cards {
             margin: auto;
-            margin-top: 50px;
+            margin-top: 20px;
             margin-bottom: 20px;
             width: 80%;
+            text-align: center;
         }
         th {
             background-color: #0070e8;
@@ -66,7 +54,8 @@
         }
         tr {
             border: 1px;
-            text-align: justify;
+            text-align: center;
+            border-bottom: 1px gre;
             font-size: 14px;
             background-color: white;
             margin: 10px;
@@ -74,34 +63,11 @@
         tr:last-child {
             background-color: rgb(198, 197, 197);
         } 
-        button {
-            background-color: white; 
-            color: black; 
-            padding: 10px 20px;
-            border: none; 
-            border-radius: 8px; 
-            cursor: pointer; 
-            margin-right: 20px;
-        }
-        button:hover{
-            background-color: #bababa;
-        }
-        button:visited {
-            color: black;
+        .mb-3 {
+            text-align: center;
         }
         a {
             text-decoration: none;
-            color: black;
-        }
-        button[class="amount"] {
-            background-color: #0070e8;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            padding: 2px 10px 2px 10px;
-            margin-left: 5%;
-            margin-right: 5%;
         }
 
     </style>
@@ -110,65 +76,120 @@
 
 {% block content %}
 
-<div class="navbar">
-    <a class="logo"><i class="fa-solid fa-box" style="color: #0070e8;" width="20px"></i>&nbsp; &nbsp; &nbsp;Inventory App</a>
-    <a class="logout-btn" href="{% url 'main:logout' %}">Logout</a>
-</div>
+<nav class="navbar" style="background-color: #ffffff;">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <i class="fa-solid fa-box" style="color: rgb(210, 132, 210);" width="60px"></i>
+            <span><b> &nbsp; Inventory App</b></span>
+        </a>
+        <a> Selamat datang, <u><b>{{ name }}</b></u>! </a>
+
+        <a href="{% url 'main:logout' %}"><button type="button" class="btn btn-light">Logout</button></a>
+    </div>
 </nav>
 
-    <h2>Selamat datang di {{ app_name }}, {{ name }}! </h5>
-    <p> Anda telah memasukkan {{ count_products }} barang ke dalam aplikasi ini. Selamat berbelanja! </p>
+</br>
 
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Amount</th>
-            <th>Edit</th>
-            <th>Delete</th>
-        </tr>
+<p class="mt-0 mb-0"> Anda telah memiliki {{ count_products }} barang di dalam aplikasi ini. </p>
+<p class="mt-0 mb-1"> Jangan lupa untuk terus meng-<i>update</i> barang yang Anda miliki ke aplikasi ini untuk hasil yang optimal!</p>
 
-        {% for product in products %}
-        <tr>                
-            <td>{{product.name}}</td>
-            <td>{{product.description}}</td>
-            <td>
-                <a href="{% url 'main:substract_amount' product.id %}">
-                <button class="amount">-</button>
-                </a>
-                {{product.amount}}
-                <a href="{% url 'main:add_amount' product.id %}">
-                <button class="amount">+</button>
-                </a>
-            </td>
-            <td>
-                <a href="{% url 'main:edit_product' product.pk %}">
-                    <i class="fa-regular fa-pen-to-square"></i>
-                </a>
-            </td>
-            <td>
-                <a href="{% url 'main:delete_product' product.pk %}">
-                    <i class="fa-solid fa-trash"></i>
-                </a>
-            </td>
-        </tr>
-            
-        {% endfor %}
-    </table>
+  <body style="background-color: blanchedalmond">
 
-    <br />
-
-    <h5>Sesi terakhir login: {{ last_login }}</h5>
-
-   <a href="{% url 'main:create_product' %}">
-        <button margin-right="5px">
-            Add New Product
-        </button>
-    </a>
-    <a href="{% url 'main:logout' %}">
-        <button>
-            Logout
-        </button>
-    </a>
+    <div id="product_cards" class="row row-cols-1 row-cols-md-3 g-4 text-center"></div>
     
+    <!-- Ini untuk AJAX -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h1 class="modal-title fs-5" id="addProductLabel">Add New Product</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form" onsubmit="return false;" >
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="col-form-label">Name:</label>
+                            <input type="text" class="form-control" id="name" name="name"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="col-form-label">Amount:</label>
+                            <input type="number" class="form-control" id="amount" name="amount"></input>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="col-form-label">Description:</label>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="button_add" data-bs-dismiss="modal">Add Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <button type="button" class="btn btn-primary mt-2" style="background-color: rgb(210, 132, 210); border: none" data-bs-toggle="modal" data-bs-target="#addProductModal">Add Product by AJAX</button>
+
+    <script>
+        async function getProducts() {
+            return fetch("{% url 'main:get_product_json' %}").then((res) => res.json())
+        }
+
+        async function refreshProducts() {
+        const productCardsContainer = document.getElementById("product_cards");
+
+        const products = await getProducts();
+        products.forEach((item, index) => {
+            const card = document.createElement("div");
+            card.classList.add("product_cards");
+            const cardContent = `
+                <div class="card h-100">
+                    <div class="card-header">
+                        Product -  ${index + 1}
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">${item.fields.name}</h3>
+                        <p class="card-text">${item.fields.amount} buah</p>
+                        <p class="card-text"><i>${item.fields.description}</i></p>
+                    </div>
+                    <div class="card-actions">
+                        <span>
+                        <a href='edit-product/${item.pk}' class="btn btn-light">
+                            <i class="fa-regular fa-pen-to-square"></i> Edit
+                        </a>
+                        <a href='delete-product/${item.pk}' class="btn btn-light">
+                            <i class="fa-solid fa-trash"></i> Delete
+                        </a>
+                    </div>
+                    <p></p>
+                    <div class="card-footer text-muted">
+                        <b>Added at: ${item.fields.date_added}</b>
+                    </div>
+                </div>
+            `;
+            card.innerHTML = cardContent;
+            productCardsContainer.appendChild(card);
+        });
+    }
+    refreshProducts();
+
+        function addProduct() {
+            fetch("{% url 'main:add_product_ajax' %}", {
+                method: "POST",
+                body: new FormData(document.querySelector('#form'))
+            }).then(refreshProducts)
+
+            document.getElementById("form").reset()
+            return false
+        }
+
+        document.getElementById("button_add").onclick = addProduct
+
+
+    </script>
+
+    <p class="mt-4"><b>Sesi terakhir login: {{ last_login }}</b></p>
+
 {% endblock content %}
