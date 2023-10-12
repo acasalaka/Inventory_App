@@ -2,72 +2,29 @@
 
 {% block meta %}
 <script src="https://kit.fontawesome.com/54f81dee97.js" crossorigin="anonymous"></script>
-    <title>Inventory App Login</title>
+    <title>Login - Inventory App</title>
     <style>
         body {
             font-family: "Poppins", sans-serif;
             text-align: center;
-            max-width: fit-content;
-            max-height: fit-content;
             background-image: url('https://images.unsplash.com/photo-1513672494107-cd9d848a383e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');
-            background-size: cover;
+            background-size: auto;
             background-repeat: no-repeat;
             background-attachment: fixed;
-        }
-        .container {
-            display: inline-block;
-            width: 220px;
-            height: 300px;
-            position: absolute;
-            top: 48%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        .register_message {
-            font-family: "Poppins", sans-serif;
-            font-size: smaller;
-            position: absolute;
-            top: 71%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 400px;
-            margin: 0 auto;
-            padding: auto;
         }
         i {
             font-size: 60px;
             padding-bottom: 17px;
         }
-        table {
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-        input[type="text"],
-        input[type="password"] {
-            width: 80%; 
-            padding: 10px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
+        form {
+            text-align: center;
+            padding: 40px;
+            background-color: #fff;
             border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        input[type="submit"] {
-            background-color: #0070e8;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            position: absolute;
-            left: 37%;
-        }
-        input[type="submit"]:hover {
-            background-color: #024995;
+        input {
+            text-align: center;
         }
     </style>
 
@@ -75,45 +32,48 @@
 
 {% block content %}
 
-<div class = "container">
-    <i class="fa-solid fa-box fa-shake" style="color: #0070e8;"></i>        
-        <form method="POST" action="">
-            {% csrf_token %}
-            <table>
-                <tr>
-                    <td>Username: </td>
-                </tr>
-                
-                <tr>
-                    <td><input type="text" name="username" placeholder="Enter your username" class="form-control"></td>
-                </tr>
-                
-                <tr>
-                    <td>Password: </td>
-                </tr>    
-                <tr>
-                    <td><input type="password" name="password" placeholder="Enter your password" class="form-control"></td>
-                </tr>
-                
-                <tr>
-                    <td></td>
-                    <td><input class="btn login_btn" type="submit" value="Login"></td>
-                </tr>
-            </table>
-        </form>
+<!-- <div class="container min-vh-100 d-flex justify-content-center align-items-center">        -->
+<div class="login container min-vh-100 d-flex justify-content-center align-items-center">
+    <div class="login-fields">
+    <form method="POST" action="">
+        {% csrf_token %}
+        <i class="fa-solid fa-box fa-shake" style="color: rgb(210, 132, 210);"></i> 
+        <table>
+        <div class="title-row">
+            <h5><b>Login</b></h5>
+        </div>
+    </br>
+        <div class="form-group">
+          <label for="InputUsername">Username:</label>
+          <input type="username" class="form-control" id="InputUsername" name="username" placeholder="Enter your username" >
+        </div>
+    </br>
+        <div class="form-group">
+          <label for="InputPassword">Password:</label>
+          <input type="password" class="form-control" id="InputPassword" name="password" placeholder="Enter your password">
+        </div>
+    </br>
+        <div class="form-group">
+            <input class="btn btn-primary" style="background-color: rgb(210, 132, 210); border: none;" type="submit" value="Login"></input>
+        </div>
     </div>
-    
-    <div class = "register_message">
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}     
-        
-        Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a>
-        
-    </div>
+</div>
 
-    {% endblock content %}
+    </br>   
+        <div class="form-group">
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <p>Don't have an account yet? <a href="{% url 'main:register' %}">Register Now</a></p>
+        </div>
+    </table>
+        </form>
+        
+    </div>
+</div>
+
+{% endblock content %}

@@ -820,6 +820,7 @@ Nantinya, laman edit_product akan mendapatkan style yang kurang lebih sama denga
     | Margin tidak meliputi background dan background color | Padding memisahkan konten dari batas |
     | Margin memisahkan blok dari blok yang berdekatan | Padding meliputi gambar dan warna background yang diterapkan di sekitar content  |
 
+
 - [X] Jelaskan perbedaan antara framework CSS Tailwind dan Bootstrap. Kapan sebaiknya kita menggunakan Bootstrap daripada Tailwind, dan sebaliknya?
 
     | Bootstrap | Tailwind |
