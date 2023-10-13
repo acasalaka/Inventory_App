@@ -151,15 +151,29 @@
                     </div>
                     <div class="card-body">
                         <h3 class="card-title">${item.fields.name}</h3>
-                        <p class="card-text">${item.fields.amount} buah</p>
+                        <div class=row>
+                            <div class="col-md-4">
+                                <a href='substract-amount/${item.pk}' class="btn btn-secondary btn-sm">
+                                -
+                                </a>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <p class="card-text">${item.fields.amount} buah</p>
+                            </div>
+                            <div class="col-md-4">
+                                <a href='add-amount/${item.pk}' class="btn btn-secondary btn-sm">
+                                +
+                                </a>
+                            </div>
+                        </div>
+                        <p></p>
                         <p class="card-text"><i>${item.fields.description}</i></p>
                     </div>
                     <div class="card-actions">
-                        <span>
-                        <a href='edit-product/${item.pk}' class="btn btn-light">
+                        <a href='edit-product/${item.pk}' class="btn btn-warning">
                             <i class="fa-regular fa-pen-to-square"></i> Edit
                         </a>
-                        <a href='delete-product/${item.pk}' class="btn btn-light">
+                        <a href='delete-product/${item.pk}' class="btn btn-warning">
                             <i class="fa-solid fa-trash"></i> Delete
                         </a>
                     </div>
